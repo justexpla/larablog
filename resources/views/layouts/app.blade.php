@@ -30,9 +30,11 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="#">Пункт меню 3</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Добавить пост</a>
-            </li>
+            @auth
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Добавить пост</a>
+                </li>
+            @endauth
 
             <!--<li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
@@ -47,12 +49,26 @@
             <!--<li class="nav-item">
                 <a class="nav-link" href="#">Пункт меню 6</a>
             </li>-->
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Регистрация</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" href="#">Войти</a>
-            </li>
+
+            @guest
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{route('register')}}">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{route('login')}}">Войти</a>
+                </li>
+            @endguest
+            @auth
+                <li class="nav-item">
+                    <a class="nav-link text-white" style="text-decoration: underline" href="#">{{\Auth::user()->name}}</a>
+                </li>
+                <li class="nav-item">
+                    <form action="{{route('logout')}}" METHOD="POST" id="logout-form">
+                        @csrf
+                        <a type="submit" class="nav-link text-white" id="logout-link" href="{{route('logout')}}">Выйти</a>
+                    </form>
+                </li>
+            @endauth
         </ul>
     </div>
 </nav>
@@ -96,5 +112,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
+<script>
+    jQuery('document').ready(function ($) {
+        $('#logout-link').click(function (e) {
+            e.preventDefault();
+            $('#logout-form').submit();
+        })
+    })
+</script>
 </body></html>
