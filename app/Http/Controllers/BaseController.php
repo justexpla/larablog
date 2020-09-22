@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PostRepository;
 use Illuminate\Http\Request;
 
 abstract class BaseController extends Controller
@@ -11,4 +12,13 @@ abstract class BaseController extends Controller
      * @var string $title
      */
     protected $title;
+
+    /**
+     * @var PostRepository $postsRepository
+     */
+    protected $postsRepository;
+
+    public function __construct()
+    {
+    }
 }
