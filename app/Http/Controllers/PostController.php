@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostCreateRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Models\Post;
 use App\Repositories\PostRepository;
 use DebugBar\DebugBar;
@@ -86,6 +87,7 @@ class PostController extends BaseController
      */
     public function edit(Post $post)
     {
+        $this->authorize('edit_post', $post);
         return view('public.post_edit_form')
             ->with(['post' => $post]);
     }
@@ -97,9 +99,19 @@ class PostController extends BaseController
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostUpdateRequest $request, Post $post)
     {
-        dd(__METHOD__);
+        $data = $request->except('_token');
+
+        $result = $post->update($data);
+
+        if ($result) {
+            return redirect()->route('posts.index')
+                ->with(['message' => __('post.updated_successful')]);
+        } else {
+            return back()->withInput()
+                ->withErrors([__('post.action_error')]);
+        }
     }
 
     /**
@@ -110,6 +122,7 @@ class PostController extends BaseController
      */
     public function destroy(Post $post)
     {
+        $this->authorize('edit_post', $post);
         $result = $post->delete();
 
         if ($result) {

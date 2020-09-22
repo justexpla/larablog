@@ -12,4 +12,5 @@ return [
     'action_error' => 'Что-то пошло не так. Пожалуйста, обратитесь к администратору - '.env('MAIL_FROM_ADDRESS'),
     'delete_confirmation' => 'Вы действительно хотите удалить пост?',
     'deleted_successful' => 'Пост удален!',
+    'updated_successful' => 'Пост обновлен!',
 ];

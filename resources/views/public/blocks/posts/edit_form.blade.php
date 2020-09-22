@@ -3,7 +3,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">{{__('post.create')}}</h4>
-            <form class="needs-validation mb-3" novalidate="" method="POST" action="{{($post) ? route('posts.edit') : route('posts.create')}}">
+            <form class="needs-validation mb-3" novalidate="" method="POST" action="{{(isset($post) && $post) ? route('posts.edit', $post) : route('posts.create')}}">
                 @csrf
                 @if(isset($post) && $post)
                     @method('PUT')
@@ -31,15 +31,6 @@
                 </div>
 
                 <button class="btn btn-primary btn-lg btn-block" type="submit">{{__('post.submit')}}</button>
-
-                <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
-                <script>
-                    var editor = ClassicEditor
-                        .create( document.querySelector( '#content' ) )
-                        .catch( error => {
-                            console.error( error );
-                        } );
-                </script>
             </form>
         </div>
     </div>

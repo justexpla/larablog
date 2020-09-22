@@ -30,11 +30,11 @@
         </div>
         <div class="post-bottom row mb-2">
             <div class="col-6 comments-counter">
-                <a href="{{$detailLink}}" class="ml-1">Комментариев: 20</a>
+                <a href="{{$detailLink}}" class="ml-1">Комментариев: {{rand(0,100)}} (WIP)</a>
             </div>
             @can('edit_post', $post)
             <div class="col-6 text-right post-control">
-                <a href="#" class="small ml-2">Редактировать пост</a>
+                <a href="{{route('posts.edit', $post)}}" class="small ml-2">Редактировать пост</a>
                 <form class="d-inline" METHOD="POST" action="{{route('posts.destroy', ['post' => $post])}}">
                     @csrf
                     @method('DELETE')
