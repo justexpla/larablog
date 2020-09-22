@@ -37,7 +37,7 @@ class PostController extends BaseController
      */
     public function create()
     {
-        dd(__METHOD__);
+        return view('public.post_edit_form');
     }
 
     /**
@@ -48,7 +48,7 @@ class PostController extends BaseController
      */
     public function store(Request $request)
     {
-        dd(__METHOD__);
+        dd(__METHOD__, $request->all());
     }
 
     /**

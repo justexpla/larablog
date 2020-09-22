@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="/css/offcanvas.css">
     <!-- Favicons -->
 
+    <style>
+        .ck-editor__editable {
+            min-height: 500px;
+        }
+    </style>
+
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-purple">
@@ -24,15 +30,15 @@
             <li class="nav-item active">
                 <a class="nav-link text-white" href="#">Пункт меню 1</a>
             </li>
-            <li class="nav-item">
+            {{--<li class="nav-item">
                 <a class="nav-link text-white" href="#">Пункт меню 2</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white" href="#">Пункт меню 3</a>
-            </li>
+            </li>--}}
             @auth
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Добавить пост</a>
+                    <a class="nav-link text-white" href="{{route('posts.create')}}">Добавить пост</a>
                 </li>
             @endauth
 
