@@ -13,7 +13,7 @@
 
 
     <!-- Custom styles for this template -->
-    <link href="offcanvas.css" rel="stylesheet">
+    <link href="css/offcanvas.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-purple">
@@ -47,14 +47,14 @@
             </li>-->
         </ul>
         <ul class="navbar-nav ml-auto text-right">
-            <li class="nav-item">
+            <!--<li class="nav-item">
                 <a class="nav-link" href="#">Пункт меню 6</a>
+            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="#">Регистрация</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Пункт меню 7</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Пункт меню 8</a>
+                <a class="nav-link" href="#">Войти</a>
             </li>
         </ul>
     </div>
@@ -81,20 +81,25 @@
         </div>
     </div>
 
-    <div class="pl-3 pr-3 pt-3 pb-2 bg-white rounded shadow-sm mb-4   <!--mt-3-->">
+    <div class="post pl-3 pr-3 pt-3 pb-1 bg-white rounded shadow-sm mb-4   <!--mt-3-->">
         <div class="text-muted pt-1">
-            <div class="mb-3 row">
-                <div class="col-9 d-inline-block">
+            <div class="post-header mb-1 row">
+                <div class="col-8 d-inline-block">
                     <h3>Title</h3>
                 </div>
-                <div class="col-3 d-inline-block text-right">
-                    <span class="align-text-bottom">Автор: такой-то</span>
-                    <img src="https://verimedhealthgroup.com/wp-content/uploads/2019/03/profile-img.jpg"
-                         alt="" width="40" height="40"
-                         class="ml-4">
+                <div class="col-4 d-inline-block text-right">
+                    <div class="author d-inline-block">
+                        <div class="small">Автор: такой-то</div>
+                        <div class="small">11 часов назад</div>
+                    </div>
+                    <div class="avatar d-inline-block align-top">
+                        <img src="https://verimedhealthgroup.com/wp-content/uploads/2019/03/profile-img.jpg"
+                        alt="" width="40" height="40"
+                        class="ml-4">
+                    </div>
                 </div>
             </div>
-            <div>
+            <div class="post-content">
                 <p class="border-bottom border-gray border-top pt-3 pb-3">
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
                     tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
@@ -103,25 +108,39 @@
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
                     tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
                 </p>
+            </div>
+            <div class="post-bottom row mb-2">
+                <div class="col-6 comments-counter">
+                    <a href="# class="ml-1" ">Комментариев: 20</a>
+                </div>
+                <div class="col-6 text-right post-control">
+                    <a href="#" class="small ml-2">Редактировать пост</a>
+                    <a href="#" class="small ml-2"></a>
+                    <a href="#" class="small ml-2">Удалить пост</a>
+                </div>
             </div>
         </div>
     </div>
 
-
-    <div class="pl-3 pr-3 pt-3 pb-2 bg-white rounded shadow-sm mb-4">
+    <div class="post pl-3 pr-3 pt-3 pb-1 bg-white rounded shadow-sm mb-4   <!--mt-3-->">
         <div class="text-muted pt-1">
-            <div class="mb-3 row">
-                <div class="col-9 d-inline-block">
+            <div class="post-header mb-1 row">
+                <div class="col-8 d-inline-block">
                     <h3>Title</h3>
                 </div>
-                <div class="col-3 d-inline-block text-right">
-                    <span class="align-text-bottom">Автор: такой-то</span>
-                    <img src="https://verimedhealthgroup.com/wp-content/uploads/2019/03/profile-img.jpg"
-                         alt="" width="40" height="40"
-                         class="ml-4">
+                <div class="col-4 d-inline-block text-right">
+                    <div class="author d-inline-block">
+                        <div class="small">Автор: такой-то</div>
+                        <div class="small">11 часов назад</div>
+                    </div>
+                    <div class="avatar d-inline-block align-top">
+                        <img src="https://verimedhealthgroup.com/wp-content/uploads/2019/03/profile-img.jpg"
+                             alt="" width="40" height="40"
+                             class="ml-4">
+                    </div>
                 </div>
             </div>
-            <div>
+            <div class="post-content">
                 <p class="border-bottom border-gray border-top pt-3 pb-3">
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
                     tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
@@ -130,24 +149,39 @@
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
                     tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
                 </p>
+            </div>
+            <div class="post-bottom row mb-2">
+                <div class="col-6 comments-counter">
+                    <a href="# class="ml-1" ">Комментариев: 20</a>
+                </div>
+                <div class="col-6 text-right post-control">
+                    <a href="#" class="small ml-2">Редактировать пост</a>
+                    <a href="#" class="small ml-2"></a>
+                    <a href="#" class="small ml-2">Удалить пост</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="pl-3 pr-3 pt-3 pb-2 bg-white rounded shadow-sm mb-4">
+    <div class="post pl-3 pr-3 pt-3 pb-1 bg-white rounded shadow-sm mb-4   <!--mt-3-->">
         <div class="text-muted pt-1">
-            <div class="mb-3 row">
-                <div class="col-9 d-inline-block">
+            <div class="post-header mb-1 row">
+                <div class="col-8 d-inline-block">
                     <h3>Title</h3>
                 </div>
-                <div class="col-3 d-inline-block text-right">
-                    <span class="align-text-bottom">Автор: такой-то</span>
-                    <img src="https://verimedhealthgroup.com/wp-content/uploads/2019/03/profile-img.jpg"
-                         alt="" width="40" height="40"
-                         class="ml-4">
+                <div class="col-4 d-inline-block text-right">
+                    <div class="author d-inline-block">
+                        <div class="small">Автор: такой-то</div>
+                        <div class="small">11 часов назад</div>
+                    </div>
+                    <div class="avatar d-inline-block align-top">
+                        <img src="https://verimedhealthgroup.com/wp-content/uploads/2019/03/profile-img.jpg"
+                             alt="" width="40" height="40"
+                             class="ml-4">
+                    </div>
                 </div>
             </div>
-            <div>
+            <div class="post-content">
                 <p class="border-bottom border-gray border-top pt-3 pb-3">
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
                     tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
@@ -156,6 +190,16 @@
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
                     tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
                 </p>
+            </div>
+            <div class="post-bottom row mb-2">
+                <div class="col-6 comments-counter">
+                    <a href="# class="ml-1" ">Комментариев: 20</a>
+                </div>
+                <div class="col-6 text-right post-control">
+                    <a href="#" class="small ml-2">Редактировать пост</a>
+                    <a href="#" class="small ml-2"></a>
+                    <a href="#" class="small ml-2">Удалить пост</a>
+                </div>
             </div>
         </div>
     </div>
