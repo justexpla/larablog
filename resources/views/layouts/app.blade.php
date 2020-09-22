@@ -8,16 +8,13 @@
     <!-- Bootstrap core CSS -->
     <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{public_path()}}/css/offcanvas.css">
+    <link rel="stylesheet" href="/css/offcanvas.css">
     <!-- Favicons -->
 
-
-    <!-- Custom styles for this template -->
-    <link href="css/offcanvas.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-purple">
-    <a class="navbar-brand mr-5" href="#">LaraBlog</a>
+    <a class="navbar-brand mr-5" href="{{route('posts.index')}}">LaraBlog</a>
     <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,16 +22,16 @@
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Пункт меню 1</a>
+                <a class="nav-link text-white" href="#">Пункт меню 1</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Пункт меню 2</a>
+                <a class="nav-link text-white" href="#">Пункт меню 2</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Пункт меню 3</a>
+                <a class="nav-link text-white" href="#">Пункт меню 3</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Пункт меню 4</a>
+                <a class="nav-link text-white" href="#">Добавить пост</a>
             </li>
 
             <!--<li class="nav-item dropdown">
@@ -51,10 +48,10 @@
                 <a class="nav-link" href="#">Пункт меню 6</a>
             </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="#">Регистрация</a>
+                <a class="nav-link text-white" href="#">Регистрация</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Войти</a>
+                <a class="nav-link text-white" href="#">Войти</a>
             </li>
         </ul>
     </div>

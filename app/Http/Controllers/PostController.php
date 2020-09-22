@@ -59,7 +59,7 @@ class PostController extends BaseController
      */
     public function show(Post $post)
     {
-        dd(__METHOD__);
+        return view('public.post_detail', compact('post'));
     }
 
     /**
