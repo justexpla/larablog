@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostCreateRequest;
 use App\Models\Post;
 use App\Repositories\PostRepository;
 use DebugBar\DebugBar;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PostController extends BaseController
@@ -25,7 +27,6 @@ class PostController extends BaseController
     public function index()
     {
         $posts = $this->getPostsForIndexPage();
-        \Debugbar::info($posts);
 
         return view('public.index')->with(['posts' => $posts]);
     }
@@ -37,6 +38,8 @@ class PostController extends BaseController
      */
     public function create()
     {
+        $this->authorize('create_post');
+
         return view('public.post_edit_form');
     }
 
@@ -46,9 +49,22 @@ class PostController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-        dd(__METHOD__, $request->all());
+        $data = $request->except('_token');
+        $data['user_id'] = Auth::user()->id;
+
+        $post = (new Post())->fill($data);
+
+        $result = $post->save();
+
+        if ($result) {
+            return redirect()->route('posts.index')
+                ->with(['message' => __('post.created_successful')]);
+        } else {
+            return back()->withInput()
+                ->withErrors([__('post.action_error')]);
+        }
     }
 
     /**
@@ -70,7 +86,8 @@ class PostController extends BaseController
      */
     public function edit(Post $post)
     {
-        dd(__METHOD__);
+        return view('public.post_edit_form')
+            ->with(['post' => $post]);
     }
 
     /**
@@ -93,7 +110,15 @@ class PostController extends BaseController
      */
     public function destroy(Post $post)
     {
-        dd(__METHOD__);
+        $result = $post->delete();
+
+        if ($result) {
+            return redirect()->route('posts.index')
+                ->with(['message' => __('post.deleted_successful')]);
+        } else {
+            return back()->withInput()
+                ->withErrors([__('post.action_error')]);
+        }
     }
 
     /**
@@ -102,16 +127,13 @@ class PostController extends BaseController
      */
     public function getPostsForIndexPage()
     {
+        $count = config('settings.index_post_chars_limit');
         $result = $this->postsRepository
             ->getPostsForIndex()
             ->load('user')
-            ->transform(function ($item) {
-                if (mb_strlen($item->content) > config('settings.index_post_chars_limit')) {
-                    $item->content = Str::limit(
-                        $item->content,
-                        config('settings.index_post_chars_limit'),
-                        '...'
-                    );
+            ->transform(function ($item) use ($count) {
+                if (mb_strlen($item->content) > $count) {
+                    $item->content = Str::limit($item->content, $count, '...');
                     $item->is_chopped = true;
                 }
 
@@ -120,4 +142,12 @@ class PostController extends BaseController
 
         return $result;
     }
+
+    //нахуя а главное зачем я это делал?
+    /*public function getPostForEdit(int $id)
+    {
+        $result = $this->postsRepository->getForEdit($id);
+
+        return $result;
+    }*/
 }

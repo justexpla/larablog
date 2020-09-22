@@ -18,7 +18,10 @@ Route::group([], function () {
     Route::get('/', [PostController::class, 'index'])->name('posts.index');
     Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.detail');
-    Route::post('post/create', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/post/edit/{post}', [PostController::class, 'edit'])->name('posts.edit');
+    Route::post('/post/edit/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::post('/post/create', [PostController::class, 'store'])->name('posts.store');
+    Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
 
 Auth::routes();

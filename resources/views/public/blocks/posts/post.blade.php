@@ -32,11 +32,16 @@
             <div class="col-6 comments-counter">
                 <a href="{{$detailLink}}" class="ml-1">Комментариев: 20</a>
             </div>
+            @can('edit_post', $post)
             <div class="col-6 text-right post-control">
                 <a href="#" class="small ml-2">Редактировать пост</a>
-                <a href="#" class="small ml-2"></a>
-                <a href="#" class="small ml-2">Удалить пост</a>
+                <form class="d-inline" METHOD="POST" action="{{route('posts.destroy', ['post' => $post])}}">
+                    @csrf
+                    @method('DELETE')
+                    <a href="#" class="small ml-2 destroy-post">Удалить пост</a>
+                </form>
             </div>
+            @endcan
         </div>
     </div>
 </div>

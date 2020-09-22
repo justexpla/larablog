@@ -13,7 +13,7 @@
 
     <style>
         .ck-editor__editable {
-            min-height: 500px;
+            min-height: 300px;
         }
     </style>
 
@@ -27,8 +27,8 @@
 
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link text-white" href="#">Пункт меню 1</a>
+            <li class="nav-item {{--active--}}">
+                <a class="nav-link {{--text-white--}}" href="#">Пункт меню 1</a>
             </li>
             {{--<li class="nav-item">
                 <a class="nav-link text-white" href="#">Пункт меню 2</a>
@@ -94,13 +94,13 @@
 </div>-->
 
 <main role="main" class="container">
-    @error('message')
-    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-danger rounded shadow-sm">
-        <div class="lh-100">
-            <h6 class="mb-0 text-white lh-100">Место под ошибки и информацию</h6>
+    @if($errors->count())
+        <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-danger rounded shadow-sm">
+            <div class="lh-100">
+                <h6 class="mb-0 text-white lh-100">{{$errors->first()}}</h6>
+            </div>
         </div>
-    </div>
-    @enderror
+    @endif
 
     @if(session('success'))
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-success rounded shadow-sm">
@@ -123,6 +123,12 @@
         $('#logout-link').click(function (e) {
             e.preventDefault();
             $('#logout-form').submit();
+        })
+        $('.destroy-post').click(function (e) {
+            e.preventDefault();
+            if ( confirm('{{__('post.delete_confirmation')}}') ) {
+                this.parentElement.submit();
+            }
         })
     })
 </script>
