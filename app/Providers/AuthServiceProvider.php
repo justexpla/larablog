@@ -34,8 +34,8 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-        Gate::define('create_post', function () {
-            return Auth::check();
+        Gate::define('create_post', function (User $user) {
+            return ! $user->isBanned();
         });
 
         Gate::define('edit_post', function (User $user, Post $post) {

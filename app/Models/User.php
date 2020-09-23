@@ -40,4 +40,85 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function role()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * Установка ролей для пользователя
+     * @param int $roleId
+     * @return $this
+     */
+    public function setRoles($roleId)
+    {
+        $this->role()->sync($roleId);
+
+        return $this;
+    }
+
+    /**
+     * Добавить роль пользователя
+     * @param int $roleId
+     * @return $this
+     */
+    public function addRole($roleId)
+    {
+        $this->role()->attach($roleId);
+
+        return $this;
+    }
+
+    /**
+     * Удаление роли пользователя
+     * @param int $roleId
+     * @return $this
+     */
+    public function deleteRole($roleId)
+    {
+        $this->role()->detach($roleId);
+
+        return $this;
+    }
+
+    /**
+     * Проверка роли пользователя
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return ($this->role->where('name', $role)->first()) ? true : false;
+    }
+
+    /**
+     * Является ли пользователь админом
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
+    /**
+     * Является ли пользователь модератором
+     * @return bool
+     */
+    public function isModerator()
+    {
+        return $this->hasRole('moderator');
+    }
+
+    /**
+     * Забанен ли пользователь
+     * @return bool
+     */
+    public function isBanned()
+    {
+        return $this->hasRole('banned');
+    }
 }

@@ -8,7 +8,11 @@
             </div>
             <div class="col-4 d-inline-block text-right">
                 <div class="author d-inline-block">
-                    <div class="small"><a href="#">{{'@'}}{{$post->user->name}}</a></div>
+                    @if($post->user->isBanned())
+                        <div class="small"><a href="#" style="color: darkgray"><s>{{'@'}}{{$post->user->name}}</s></a></div>
+                    @else
+                        <div class="small"><a href="#">{{'@'}}{{$post->user->name}}</a></div>
+                    @endif
                     <div class="small">{{$post->created_at->diffForHumans()}}</div>
                 </div>
                 <div class="avatar d-inline-block align-top">

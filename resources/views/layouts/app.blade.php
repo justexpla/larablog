@@ -36,11 +36,11 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="#">Пункт меню 3</a>
             </li>--}}
-            @auth
+            @can('create-post')
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('posts.create')}}">Добавить пост</a>
                 </li>
-            @endauth
+            @endcan
 
             <!--<li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
