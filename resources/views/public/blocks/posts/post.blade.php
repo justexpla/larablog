@@ -1,5 +1,5 @@
 @php /**@var \App\Models\Post $post*/ @endphp
-@php $detailLink = route('posts.detail', ['post' => $post->id]); @endphp
+@php $detailLink = route('posts.show', ['post' => $post->id]); @endphp
 <div class="post pl-3 pr-3 pt-3 pb-1 bg-white rounded shadow-sm mb-4 mt-3">
     <div class="text-muted pt-1">
         <div class="post-header mb-1 row">

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([], function () {
+/*Route::group([], function () {
     Route::get('/', [PostController::class, 'index'])->name('posts.index');
     Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.detail');
@@ -22,7 +22,13 @@ Route::group([], function () {
     Route::put('/post/edit/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::post('/post/create', [PostController::class, 'store'])->name('posts.store');
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
-});
+});*/
+
+Route::resource('post', PostController::class)
+    ->except(['index'])
+    ->names('posts');
+Route::get('/', [PostController::class, 'index'])
+    ->name('posts.index');
 
 Auth::routes();
 

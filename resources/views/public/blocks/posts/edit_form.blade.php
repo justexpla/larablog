@@ -3,7 +3,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">{{__('post.create')}}</h4>
-            <form class="needs-validation mb-3" novalidate="" method="POST" action="{{(isset($post) && $post) ? route('posts.edit', $post) : route('posts.create')}}">
+            <form class="needs-validation mb-3" novalidate="" method="POST" action="{{(isset($post) && $post) ? route('posts.update', $post) : route('posts.store')}}">
                 @csrf
                 @if(isset($post) && $post)
                     @method('PUT')
