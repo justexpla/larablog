@@ -121,4 +121,26 @@ class User extends Authenticatable
     {
         return $this->hasRole('banned');
     }
+
+    /**
+     * Забанить пользователя
+     * @return $this
+     */
+    public function ban()
+    {
+        $this->addRole(Role::ROLE_BANNED_ID);
+
+        return $this;
+    }
+
+    /**
+     * Разбанить пользователя
+     * @return $this
+     */
+    public function unban()
+    {
+        $this->deleteRole(Role::ROLE_BANNED_ID);
+
+        return $this;
+    }
 }

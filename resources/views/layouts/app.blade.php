@@ -36,7 +36,7 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="#">Пункт меню 3</a>
             </li>--}}
-            @can('create-post')
+            @can('create_post')
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('posts.create')}}">Добавить пост</a>
                 </li>
