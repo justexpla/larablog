@@ -39,6 +39,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('edit_post', function (User $user, Post $post) {
+            if ($user->isModerator()) {
+                return ! $post->user->isAdmin();        #запрет модерам влиять на посты админа
+            }
             return $post->user_id === $user->id;
         });
     }

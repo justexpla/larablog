@@ -126,7 +126,7 @@
                 this.parentElement.submit();
             }
         })
-        if ($('#content').length) {
+        if ($('textarea#content').length) {
             CKEDITOR.replace('content')
         }
     })

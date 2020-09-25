@@ -33,3 +33,7 @@ Route::get('/', [PostController::class, 'index'])
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => '/user/'] , function () {
+    Route::get('/{user}', [\App\Http\Controllers\UserProfileController::class, 'show'])->name('user.show');
+});

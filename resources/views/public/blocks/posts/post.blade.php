@@ -9,9 +9,9 @@
             <div class="col-4 d-inline-block text-right">
                 <div class="author d-inline-block">
                     @if($post->user->isBanned())
-                        <div class="small"><a href="#" style="color: darkgray"><s>{{'@'}}{{$post->user->name}}</s></a></div>
+                        <div class="small"><a href="{{route('user.show', $post->user)}}" style="color: darkgray"><s>{{'@'}}{{$post->user->name}}</s></a></div>
                     @else
-                        <div class="small"><a href="#">{{'@'}}{{$post->user->name}}</a></div>
+                        <div class="small"><a href="{{route('user.show', $post->user)}}">{{'@'}}{{$post->user->name}}</a></div>
                     @endif
                     <div class="small">{{$post->created_at->diffForHumans()}}</div>
                 </div>

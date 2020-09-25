@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Class User
+ * @property int id
+ * @property string name
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -142,5 +148,20 @@ class User extends Authenticatable
         $this->deleteRole(Role::ROLE_BANNED_ID);
 
         return $this;
+    }
+
+    /**
+     * Возвращает название роли пользователя. Роль простого пользователя имеет меньший приоритет, чем остальные
+     * @return string
+     */
+    public function getUserRoleLabel()
+    {
+        $roles = $this->role->except(['id' => Role::ROLE_USER_ID]);
+
+        if ($roles->count()) {
+            return $roles->first()->label;
+        } else {
+            return $this->role->first()->label;
+        }
     }
 }

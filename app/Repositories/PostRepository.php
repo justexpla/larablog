@@ -3,6 +3,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Post;
 use App\Models\Post as Model;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -58,4 +59,23 @@ class PostRepository extends BaseRepository
 
         return $result;
     }*/
+
+    public function getPostsByUser(int $id) : Collection
+    {
+        $columns = [
+            'id',
+            'title',
+            'content',
+            'created_at',
+            'user_id'
+        ];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->where('user_id', $id)
+            ->take(20)
+            ->get();
+
+        return $result;
+    }
 }
