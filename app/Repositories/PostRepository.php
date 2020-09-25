@@ -100,4 +100,25 @@ class PostRepository extends BaseRepository
 
         return $result;
     }
+
+    public function getMorePostsForUser(int $userId, int $offset)
+    {
+        $columns = [
+            'id',
+            'title',
+            'content',
+            'created_at',
+            'user_id'
+        ];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->where('user_id', $userId)
+            ->latest()
+            ->offset($offset)
+            ->take(config('settings.index_post_count'))
+            ->get();
+
+        return $result;
+    }
 }
