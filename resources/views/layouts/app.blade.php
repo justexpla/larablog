@@ -11,11 +11,6 @@
     <link rel="stylesheet" href="/css/offcanvas.css">
     <!-- Favicons -->
 
-    <style>
-        .ck-editor__editable {
-            min-height: 300px;
-        }
-    </style>
 
 </head>
 <body class="bg-light">
@@ -118,7 +113,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
+<script src="{{asset('js/ckeditor/ckeditor.js')}}"></script>
 <script>
     jQuery('document').ready(function ($) {
         $('#logout-link').click(function (e) {
@@ -131,12 +126,8 @@
                 this.parentElement.submit();
             }
         })
-        if ($('textarea#content').length) {
-            var editor = ClassicEditor
-                .create( document.querySelector( '#content' ))
-                .catch( error => {
-                    console.error( error );
-                } );
+        if ($('#content').length) {
+            CKEDITOR.replace('content')
         }
     })
 </script>
