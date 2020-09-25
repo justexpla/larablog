@@ -6,6 +6,7 @@ namespace App\Repositories;
 use App\Models\Post;
 use App\Models\Post as Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PostRepository extends BaseRepository
 {
@@ -22,7 +23,7 @@ class PostRepository extends BaseRepository
      * Получение постов для индексной страницы
      * @return Collection
      */
-    public function getPostsForIndex() : Collection
+    public function getPostsForIndex() : LengthAwarePaginator
     {
         $columns = [
             'id',
@@ -34,9 +35,8 @@ class PostRepository extends BaseRepository
 
         $result = $this->startConditions()
             ->select($columns)
-            ->take(20)
             ->latest()
-            ->get();
+            ->paginate(config('settings.index_post_count'));
 
         return $result;
     }
@@ -60,7 +60,7 @@ class PostRepository extends BaseRepository
         return $result;
     }*/
 
-    public function getPostsByUser(int $id) : Collection
+    public function getPostsByUser(int $id) : LengthAwarePaginator
     {
         $columns = [
             'id',
@@ -73,8 +73,8 @@ class PostRepository extends BaseRepository
         $result = $this->startConditions()
             ->select($columns)
             ->where('user_id', $id)
-            ->take(20)
-            ->get();
+            ->latest()
+            ->paginate(config('settings.index_post_count'));
 
         return $result;
     }
