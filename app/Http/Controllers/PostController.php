@@ -29,7 +29,7 @@ class PostController extends BaseController
     {
         $posts = $this->getPostsForIndexPage();
 
-        return view('public.index')->with(['posts' => $posts]);
+        return $this->renderOutput('public.index')->with(['posts' => $posts]);
     }
 
     /**
@@ -39,9 +39,10 @@ class PostController extends BaseController
      */
     public function create()
     {
+        $this->setPageTitle(__('post.create'));
         $this->authorize('create_post');
 
-        return view('public.post_edit_form');
+        return $this->renderOutput('public.post_edit_form');
     }
 
     /**
@@ -76,7 +77,9 @@ class PostController extends BaseController
      */
     public function show(Post $post)
     {
-        return view('public.post_detail', compact('post'));
+        $this->setPageTitle($post->title);
+
+        return $this->renderOutput('public.post_detail')->with(['post' => $post]);
     }
 
     /**
@@ -87,8 +90,10 @@ class PostController extends BaseController
      */
     public function edit(Post $post)
     {
+        $this->setPageTitle(__('post.edit'));
         $this->authorize('edit_post', $post);
-        return view('public.post_edit_form')
+
+        return $this->renderOutput('public.post_edit_form')
             ->with(['post' => $post]);
     }
 
@@ -155,12 +160,4 @@ class PostController extends BaseController
 
         return $result;
     }
-
-    //нахуя а главное зачем я это делал?
-    /*public function getPostForEdit(int $id)
-    {
-        $result = $this->postsRepository->getForEdit($id);
-
-        return $result;
-    }*/
 }

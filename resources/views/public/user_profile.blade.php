@@ -12,7 +12,7 @@
             </div>
             <div class="post-content mb-1">
                 <div class="pt-3 pb-3">
-                    <p>Зарегистрирован: {{$user->created_at}}</p>
+                    <p>Зарегистрирован: {{$user->created_at->format('d.m.Y')}} <span class="small text-muted">({{$user->created_at->diffForHumans()}})</span></p>
                     <p>Роль: {{$user->getUserRoleLabel()}}</p>
                 </div>
             </div>

@@ -17,8 +17,9 @@ class UserProfileController extends BaseController
 
     public function show(User $user)
     {
+        $this->setPageTitle($user->name);
         $posts = $this->getPostByUser($user->id);
-        return view('public.user_profile')->with(['user' => $user, 'posts' => $posts]);
+        return $this->renderOutput('public.user_profile')->with(['user' => $user, 'posts' => $posts]);
     }
 
     public function getPostByUser(int $id)

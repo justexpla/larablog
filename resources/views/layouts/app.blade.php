@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <title>LaraBlog</title>
+    <title>{{$title ?? __('misc.default_page_title')}}</title>
 
     <!-- Bootstrap core CSS -->
     <!-- CSS only -->
@@ -61,7 +61,7 @@
             @endguest
             @auth
                 <li class="nav-item">
-                    <a class="nav-link text-white" style="text-decoration: underline" href="#">{{\Auth::user()->name}}</a>
+                    <a class="nav-link text-white" style="text-decoration: underline" href="{{route('user.show', \Auth::user())}}">{{\Auth::user()->name}}</a>
                 </li>
                 <li class="nav-item">
                     <form action="{{route('logout')}}" METHOD="POST" id="logout-form">
