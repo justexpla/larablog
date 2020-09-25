@@ -24,16 +24,17 @@ use Illuminate\Support\Facades\Route;
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });*/
 
+Route::post('/post/load', [PostController::class, 'load'])->name('post.load');
 Route::resource('post', PostController::class)
     ->except(['index'])
     ->names('posts');
 Route::get('/', [PostController::class, 'index'])
     ->name('posts.index');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::group(['prefix' => '/user/'] , function () {
     Route::get('/{user}', [\App\Http\Controllers\UserProfileController::class, 'show'])->name('user.show');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

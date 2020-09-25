@@ -160,4 +160,29 @@ class PostController extends BaseController
 
         return $result;
     }
+
+    /**
+     * Получение постов для бесконечной ленты
+     * @return array
+     * @throws \Throwable
+     */
+    public function load()
+    {
+        $posts = $this->getMorePosts(\request()->get('page'));
+        $htmlOutput = [];
+
+        foreach ($posts as $post) {
+            $htmlOutput[] = view('public.blocks.posts.post')->with(['post' => $post])->render();
+        }
+
+        return $htmlOutput;
+    }
+
+    public function getMorePosts(int $page)
+    {
+        $offset = config('settings.index_post_count') * $page;
+        $result = $this->postsRepository->getMorePostsForIndex($offset);
+
+        return $result;
+    }
 }

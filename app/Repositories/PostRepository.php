@@ -23,7 +23,7 @@ class PostRepository extends BaseRepository
      * Получение постов для индексной страницы
      * @return Collection
      */
-    public function getPostsForIndex() : LengthAwarePaginator
+    public function getPostsForIndex()
     {
         $columns = [
             'id',
@@ -36,7 +36,8 @@ class PostRepository extends BaseRepository
         $result = $this->startConditions()
             ->select($columns)
             ->latest()
-            ->paginate(config('settings.index_post_count'));
+            ->take(config('settings.index_post_count'))
+            ->get();
 
         return $result;
     }
@@ -60,7 +61,7 @@ class PostRepository extends BaseRepository
         return $result;
     }*/
 
-    public function getPostsByUser(int $id) : LengthAwarePaginator
+    public function getPostsByUser(int $id)
     {
         $columns = [
             'id',
@@ -74,7 +75,28 @@ class PostRepository extends BaseRepository
             ->select($columns)
             ->where('user_id', $id)
             ->latest()
-            ->paginate(config('settings.index_post_count'));
+            ->take(config('settings.index_post_count'))
+            ->get();
+
+        return $result;
+    }
+
+    public function getMorePostsForIndex(int $offset)
+    {
+        $columns = [
+            'id',
+            'title',
+            'content',
+            'created_at',
+            'user_id'
+        ];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->latest()
+            ->offset($offset)
+            ->take(config('settings.index_post_count'))
+            ->get();
 
         return $result;
     }
