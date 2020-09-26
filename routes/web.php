@@ -36,7 +36,7 @@ Route::group(['prefix' => '/user/'] , function () {
     Route::get('/{user}', [UserProfileController::class, 'show'])->name('user.show');
     Route::post('/{user}/load', [UserProfileController::class, 'load'])->name('user.posts.load');   #ajax
     Route::get('/{user}/edit', [UserProfileController::class, 'edit'])->name('user.edit');
-    Route::post('/{user}/edit', [UserProfileController::class, 'update'])->name('user.update');
+    Route::put('/{user}/edit', [UserProfileController::class, 'update'])->name('user.update');
 });
 
 Auth::routes();
