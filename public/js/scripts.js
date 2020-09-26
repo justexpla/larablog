@@ -7,17 +7,27 @@ jQuery('document').ready(function ($) {
 
     let currentPage = 1;
     $('#load-more').bind('click', function (e) {
-        console.log('button pressed!');
-        var data = {
+
+        let userId = parseInt($(this).data('user'));
+        let data = {
+            user_id: userId,
             page: currentPage
         };
+
+        let ajaxUrl = function(userId) {
+            if (userId) {
+                return `/user/${userId}/load`
+            } else {
+                return '/post/load'
+            }
+        }
+        console.log(ajaxUrl(userId));
         $.ajax({
-            url: '/post/load',
+            url: ajaxUrl(userId),
             data: data,
             type: "POST",
             success: function (responce) {
                 currentPage += 1;
-                console.log(data)
                 for(var i in responce) {
                     $('.container').append(responce[i]);
                     if(responce.length < 20) {

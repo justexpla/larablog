@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,8 @@ Route::get('/', [PostController::class, 'index'])
     ->name('posts.index');
 
 Route::group(['prefix' => '/user/'] , function () {
-    Route::get('/{user}', [\App\Http\Controllers\UserProfileController::class, 'show'])->name('user.show');
+    Route::get('/{user}', [UserProfileController::class, 'show'])->name('user.show');
+    Route::post('/{user}/load', [UserProfileController::class, 'load'])->name('user.posts.load');
 });
 
 Auth::routes();
