@@ -36,6 +36,6 @@ class Post extends Model
 
     public function commentaries()
     {
-        return $this->hasMany(Commentary::class);
+        return $this->hasManyThrough(Commentary::class,);
     }
 }

@@ -42,3 +42,10 @@ Route::group(['prefix' => '/user/'] , function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+Route::get('/test', function () {
+    $post = App\Models\Post::find(108);
+    dd($post->commentaries);
+});
