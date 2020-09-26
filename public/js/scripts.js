@@ -21,7 +21,7 @@ jQuery('document').ready(function ($) {
                 return '/post/load'
             }
         }
-        console.log(ajaxUrl(userId));
+
         $.ajax({
             url: ajaxUrl(userId),
             data: data,

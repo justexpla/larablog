@@ -30,7 +30,7 @@ class UserProfileController extends BaseController
     }
 
     /**
-     * #TODO: весь этот пиздец отрефакторить!
+     * #TODO: весь этот пиздец отрефакторить! (ВАЛИДАЦИЯ ГДЕ БЛЯТБб)
      * Получение постов для бесконечной ленты
      * @return array
      * @throws \Throwable
@@ -53,5 +53,16 @@ class UserProfileController extends BaseController
         $result = $this->postsRepository->getMorePostsForUser($userId, $offset);
 
         return $result;
+    }
+
+    public function edit(User $user)
+    {
+        $this->authorize('edit_profile', $user);
+        dd(__METHOD__, $user);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        dd(__METHOD__, $user, $request->all());
     }
 }

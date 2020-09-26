@@ -2,9 +2,12 @@
     <div class="text-muted pt-1">
         <div class="post-header mb-1 row">
             <div class="col-8 d-inline-block">
-                <h4>
+                <h4 class="d-inline-block">
                     {{$user->name}}
                 </h4>
+                @can('edit_profile', $user)
+                    <a href="{{route('user.edit', $user)}}" class="text-muted small ml-3">Редактировать профиль</a>
+                @endcan
             </div>
         </div>
         <div class="post-content mb-1">
