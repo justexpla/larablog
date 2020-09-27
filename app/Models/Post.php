@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,6 +37,25 @@ class Post extends Model
 
     public function commentaries()
     {
-        return $this->hasManyThrough(Commentary::class,);
+        return $this->hasMany(Commentary::class);
+    }
+
+    /**
+     * Метод выполняет подгрузки недостающих сущностей
+     */
+    public function prepareForShow()
+    {
+        $this->loadCommentariesUsers();
+
+        return $this;
+    }
+
+    /**
+     * Подгрузка информации о авторе комментария
+     * @return Model
+     */
+    public function loadCommentariesUsers()
+    {
+        return $this->commentaries->load('user')->groupBy('parent_id');
     }
 }

@@ -78,6 +78,7 @@ class PostController extends BaseController
     public function show(Post $post)
     {
         $this->setPageTitle($post->title);
+        $post->prepareForShow();
 
         return $this->renderOutput('public.post_detail')->with(['post' => $post]);
     }
@@ -148,7 +149,7 @@ class PostController extends BaseController
         $count = config('settings.index_post_chars_limit');
         $result = $this->postsRepository
             ->getPostsForIndex()
-            ->load('user')
+            ->load('user', 'commentaries')
             ->transform(function ($item) use ($count) {
                 if (mb_strlen($item->content) > $count) {
                     $item->content = Str::limit($item->content, $count, '...');

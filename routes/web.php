@@ -46,6 +46,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::get('/test', function () {
-    $post = App\Models\Post::find(108);
-    dd($post->commentaries);
+    $commentary = \App\Models\Commentary::find(1);
+    dd($commentary->post, $commentary->user);
 });
