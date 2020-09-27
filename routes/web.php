@@ -30,6 +30,8 @@ Route::post('/post/load', [PostController::class, 'load'])
     ->name('post.load');  #ajax
 Route::post('/post/commentary/create', [CommentaryController::class, 'store'])
     ->name('post.commentary.create');
+Route::get('/post/commentary/create', [CommentaryController::class, 'store'])
+    ;
 
 Route::resource('post', PostController::class)
     ->except(['index'])

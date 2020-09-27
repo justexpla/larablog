@@ -39,4 +39,19 @@ jQuery('document').ready(function ($) {
             }
         })
     })
+
+    $('#commentary-form button[type=submit]').click(function (e) {
+        e.preventDefault();
+        let data = $('#commentary-form').serializeArray();
+        $.ajax({
+            url: $('#commentary-form').attr('action'),
+            method: 'POST',
+            data: data,
+            success: function (responce) {
+                console.log(responce)
+                $('.commentary-section .parent-comment').last().append(responce);
+                $('#commentary-form')[0].reset();
+            }
+        })
+    })
 })

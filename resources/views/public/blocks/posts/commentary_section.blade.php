@@ -1,4 +1,4 @@
-<div class="post pl-3 pr-3 pt-3 pb-1 bg-white rounded shadow-sm mb-4 mt-3">
+<div class="post pl-3 pr-3 pt-3 pb-1 bg-white rounded shadow-sm mb-4 mt-3 commentary-section">
     <strong>Comments!</strong>
     @if($post->commentaries->count())
         @php $commentaryList = $post->commentaries->groupBy('parent_id') @endphp
