@@ -22,13 +22,20 @@ class CommentaryController extends BaseController
         $data = $request->except('_token');
         $result = Commentary::create($data);
 
+
+
         if ($result) {
             if ($request->ajax()) {
-                $htmlOutput = view('public.blocks.posts.commentary_item')
+                $responce = [];
+                $responce['htmlOutput'] =  view('public.blocks.posts.commentary_item')
                     ->with(['commentary' => $result])
                     ->render();
+                $responce['commentary_id'] = $result->id;
+                if ($result->parent_id) {
+                    $responce['parent_id'] = $result->parent_id;
+                }
 
-                return $htmlOutput;
+                return $responce;
             } else {
                 return back()->with(['message' => 'Success']);
             }

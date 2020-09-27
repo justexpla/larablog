@@ -34,7 +34,7 @@
         </div>
         <div class="post-bottom row mb-2">
             <div class="col-6 comments-counter">
-                <a href="{{$detailLink}}" class="ml-1">Комментариев: {{$post->commentaries->count()}} (WIP)</a>
+                <a href="{{$detailLink}}" class="ml-1">Комментариев: <span class="commentary-count">{{$post->commentaries->count()}}</span></a>
             </div>
             @can('edit_post', $post)
             <div class="col-6 text-right post-control">
