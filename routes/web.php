@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentaryController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserProfileController;
@@ -25,7 +26,11 @@ use App\Http\Controllers\UserProfileController;
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });*/
 
-Route::post('/post/load', [PostController::class, 'load'])->name('post.load');  #ajax
+Route::post('/post/load', [PostController::class, 'load'])
+    ->name('post.load');  #ajax
+Route::post('/post/commentary/create', [CommentaryController::class, 'store'])
+    ->name('post.commentary.create');
+
 Route::resource('post', PostController::class)
     ->except(['index'])
     ->names('posts');

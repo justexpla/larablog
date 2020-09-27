@@ -14,4 +14,7 @@ return [
     'deleted_successful' => 'Пост удален!',
     'edit' => 'Редактирование поста',
     'updated_successful' => 'Пост обновлен!',
+    'commentary.submit' => 'Отправить комментарий',
+    'commentary.reply' => 'Ответить на комментарий',
+    'no_comments' => 'Комментариев пока нет. Будьте первыми!'
 ];
