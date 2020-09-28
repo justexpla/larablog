@@ -6,7 +6,7 @@
             @include('public.blocks.posts.commentary_item', ['commentary' => $commentary])
         @endforeach
     @else
-        <div class="parent-comment">
+        <div class="parent-comment no-comments-message">
             <div class="media text-muted pt-4">
                 <div class="media-body pb-3 mb-0 lh-125">
                     <p class="mb-0">{{__('post.no_comments')}}</p>

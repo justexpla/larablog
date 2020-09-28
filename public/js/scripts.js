@@ -87,7 +87,7 @@ jQuery('document').ready(function ($) {
                 $('.replied-comment').remove();
                 if(responce.parent_id === undefined) {
                     console.log('test')
-                    $('.commentary-section .parent-comment').last().append(responce.htmlOutput);
+                    $('.commentary-section .parent-comment').last().after(responce.htmlOutput);
                 } else {
                     $(`div[data-commentary-id=${responce.parent_id}]`).append(
                         `<div class="ml-4 child-comment">${responce.htmlOutput}</div>`);
@@ -98,6 +98,10 @@ jQuery('document').ready(function ($) {
 
                 let commentaryCount = parseInt($(".commentary-count").text());
                 $(".commentary-count").text(commentaryCount + 1)
+
+                if($('.no-comments-message').length) {
+                    $('.no-comments-message').remove();
+                }
             },
             error: function (xhr, status) {
                 let responce = JSON.parse(xhr.responseText);
