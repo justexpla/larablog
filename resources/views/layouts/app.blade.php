@@ -61,10 +61,16 @@
                 </li>
             @endguest
             @auth
-                <li class="nav-item">
+                <li class="nav-item mr-3 dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Настройки</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="{{route('settings.blacklist.index')}}">Черный список</a>
+                    </div>
+                </li>
+                <li class="nav-item mr-3">
                     <a class="nav-link text-white" style="text-decoration: underline" href="{{route('user.show', \Auth::user())}}">{{\Auth::user()->name}}</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mr-3">
                     <form action="{{route('logout')}}" METHOD="POST" id="logout-form">
                         @csrf
                         <a type="submit" class="nav-link text-white" id="logout-link" href="{{route('logout')}}">Выйти</a>
@@ -101,7 +107,7 @@
     @if(session('success'))
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-success rounded shadow-sm">
         <div class="lh-100">
-            <h6 class="mb-0 text-white lh-100">Место под уведомления</h6>
+            <h6 class="mb-0 text-white lh-100">{{session('success')}}</h6>
         </div>
     </div>
     @endif

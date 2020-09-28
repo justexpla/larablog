@@ -164,4 +164,21 @@ class User extends Authenticatable
             return $this->role->first()->label;
         }
     }
+
+    /**
+     * Метод возвращает список пользователей, добавленных в ЧС
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function blackList()
+    {
+        return $this->hasManyThrough(
+            User::class,
+            BlackList::class,
+            'user_id',
+            'id',
+            'id',
+            'banned_id'
+        );
+    }
 }

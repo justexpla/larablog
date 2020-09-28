@@ -37,14 +37,19 @@ Route::group(['prefix' => '/user/'] , function () {
     Route::put('/{user}/edit', [UserProfileController::class, 'update'])->name('user.update');
 });
 
+/**
+ * Настройки
+ */
+Route::group(['prefix' => 'settings'], function () {
+    Route::resource('blacklist', \App\Http\Controllers\Settings\BlackListController::class)
+        ->names('settings.blacklist')
+        ->only(['index', 'destroy', 'store']);
+});
+
 Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-if (env('APP_DEBUG') === 'true') {
-    Route::get('/test', function () {
-        $commentary = \App\Models\Commentary::find(1);
-        dd($commentary->post, $commentary->user);
-    });
-}
+Route::get('/test', function () {
+    $user = \App\Models\User::find(2);
+    dd($user->blackList);
+});
