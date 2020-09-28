@@ -115,4 +115,9 @@ jQuery('document').ready(function ($) {
             }
         })
     })
+
+    $('.add-to-blacklist-form_button').click(function (e) {
+        e.preventDefault();
+        $(this).parent('form.add-to-blacklist-form').submit();
+    })
 })

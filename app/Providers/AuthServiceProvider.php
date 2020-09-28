@@ -52,5 +52,12 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('create_comments', function (User $user) {
             return ! $user->isBanned();
         });
+
+        Gate::define('add_to_blacklist', function (User $authUser, User $requestedUser) {
+            #в ЧС нельзя добавить администратора, модератора и себя самого
+            return ! ($requestedUser->isAdmin()
+                || $requestedUser->isModerator()
+                || $requestedUser->id === $authUser->id);
+        });
     }
 }

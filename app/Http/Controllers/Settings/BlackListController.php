@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\BlackList;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Utils;
 
 class BlackListController extends BaseController
@@ -50,8 +50,17 @@ class BlackListController extends BaseController
         }
     }
 
-    public function store(Request $request, User $blacklist)
+    public function store(Request $request, User $bannedUser)
     {
-        dd(__METHOD__, $blacklist, $request->all());
+        $data = $request->except(['_token']);
+        $data['user_id'] = \auth()->user()->id;
+
+        $result = BlackList::create($data);
+
+        if ($result) {
+            return back()->with(['success' => __('pages.settings.blacklist.user_added')]);
+        } else {
+            return back()->withErrors(['message' => __('post.action_error')]);
+        }
     }
 }
