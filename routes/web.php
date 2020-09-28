@@ -16,16 +16,6 @@ use App\Http\Controllers\UserProfileController;
 |
 */
 
-/*Route::group([], function () {
-    Route::get('/', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
-    Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.detail');
-    Route::get('/post/edit/{post}', [PostController::class, 'edit'])->name('posts.edit');
-    Route::put('/post/edit/{post}', [PostController::class, 'update'])->name('posts.update');
-    Route::post('/post/create', [PostController::class, 'store'])->name('posts.store');
-    Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
-});*/
-
 Route::post('/post/load', [PostController::class, 'load'])
     ->name('post.load');  #ajax
 Route::post('/post/commentary/create', [CommentaryController::class, 'store'])
@@ -36,6 +26,7 @@ Route::get('/post/commentary/create', [CommentaryController::class, 'store'])
 Route::resource('post', PostController::class)
     ->except(['index'])
     ->names('posts');
+
 Route::get('/', [PostController::class, 'index'])
     ->name('posts.index');
 
@@ -48,11 +39,12 @@ Route::group(['prefix' => '/user/'] , function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-
-Route::get('/test', function () {
-    $commentary = \App\Models\Commentary::find(1);
-    dd($commentary->post, $commentary->user);
-});
+if (env('APP_DEBUG') === 'true') {
+    Route::get('/test', function () {
+        $commentary = \App\Models\Commentary::find(1);
+        dd($commentary->post, $commentary->user);
+    });
+}
