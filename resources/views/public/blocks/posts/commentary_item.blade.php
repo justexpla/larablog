@@ -6,7 +6,9 @@
             <p class="mb-0">{{$commentary->content}}</p>
             <div class="comment-control-section mt-1">
                 <div>
-                    <a href="#" class="small text-muted commentary-reply-button" data-commentary-id="{{$commentary->id}}">Ответить</a>
+                    @can('create_comments')
+                        <a href="#" class="small text-muted commentary-reply-button" data-commentary-id="{{$commentary->id}}">Ответить</a>
+                    @endcan
                 </div>
             </div>
         </div>

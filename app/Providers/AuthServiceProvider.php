@@ -48,5 +48,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('edit_profile', function (User $authUser, User $requiredUser){
             return $authUser->id === $requiredUser->id;
         });
+
+        Gate::define('create_comments', function (User $user) {
+            return ! $user->isBanned();
+        });
     }
 }

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentaryCreateRequest;
 use App\Models\Commentary;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CommentaryController extends BaseController
 {
@@ -19,15 +17,15 @@ class CommentaryController extends BaseController
      */
     public function store(CommentaryCreateRequest $request)
     {
+        $this->authorize('create_comments');
+
         $data = $request->except('_token');
         $result = Commentary::create($data);
-
-
 
         if ($result) {
             if ($request->ajax()) {
                 $responce = [];
-                $responce['htmlOutput'] =  view('public.blocks.posts.commentary_item')
+                $responce['htmlOutput'] = view('public.blocks.posts.commentary_item')
                     ->with(['commentary' => $result])
                     ->render();
                 $responce['commentary_id'] = $result->id;

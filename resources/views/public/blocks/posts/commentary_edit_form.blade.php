@@ -1,4 +1,5 @@
 <div class="pl-3 pr-3 pt-1 pb-1 bg-white rounded mb-4 mt-3 comment-form-container">
+    @can('create_comments')
     <div class="order-md-1">
         <div class="mb-2">
             <strong class="pb-3 comment-form-title">Ответить</strong>
@@ -15,4 +16,9 @@
             <button class="btn btn-primary btn-lg btn-block" type="submit">{{__('post.commentary.submit')}}</button>
         </form>
     </div>
+    @else
+        <div class="text-center">
+            <strong>{{__('post.commentary.need_auth')}}</strong>
+        </div>
+    @endcan
 </div>
