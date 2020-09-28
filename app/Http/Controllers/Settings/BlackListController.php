@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\AddToBlackListRequest;
 use App\Models\BlackList;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -50,8 +51,16 @@ class BlackListController extends BaseController
         }
     }
 
-    public function store(Request $request, User $bannedUser)
+    /**
+     * Добавление в ЧС
+     *
+     * @param AddToBlackListRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(AddToBlackListRequest $request)
     {
+        $this->authorize('add_to_blacklist', User::findOrFail(\request()->get('banned_id')));
+
         $data = $request->except(['_token']);
         $data['user_id'] = \auth()->user()->id;
 

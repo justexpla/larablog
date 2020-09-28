@@ -120,4 +120,9 @@ jQuery('document').ready(function ($) {
         e.preventDefault();
         $(this).parent('form.add-to-blacklist-form').submit();
     })
+
+    $('.remove-from-blacklist-form_button').click(function (e) {
+        e.preventDefault();
+        $(this).parent('form.remove-from-blacklist-form').submit();
+    })
 })

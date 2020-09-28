@@ -181,4 +181,9 @@ class User extends Authenticatable
             'banned_id'
         );
     }
+
+    public function hasOnBlackList(int $bannedUserId)
+    {
+        return ($this->blackList->find($bannedUserId)) ? true : false;
+    }
 }

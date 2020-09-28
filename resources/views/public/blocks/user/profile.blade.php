@@ -9,11 +9,19 @@
                     <a href="{{route('user.edit', $user)}}" class="text-muted small ml-3">Редактировать профиль</a>
                 @endcan
                 @can('add_to_blacklist', $user)
-                    <form action="{{route('settings.blacklist.store', $user)}}" method="POST" class="add-to-blacklist-form d-inline">
-                        @csrf
-                        <input type="hidden" name="banned_id" value="{{$user->id}}">
-                        <a href="{{route('settings.blacklist.store', $user)}}" class="text-muted small ml-3 add-to-blacklist-form_button">Добавить в ЧС</a>
-                    </form>
+                    @if(\Auth::user()->hasOnBlackList($user->id))
+                        <form action="{{route('settings.blacklist.destroy', $user)}}" method="POST" class="remove-from-blacklist-form d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <a href="{{route('settings.blacklist.destroy', $user)}}" class="text-muted small ml-3 remove-from-blacklist-form_button">Убрать из ЧС</a>
+                        </form>
+                    @else
+                        <form action="{{route('settings.blacklist.store', $user)}}" method="POST" class="add-to-blacklist-form d-inline">
+                            @csrf
+                            <input type="hidden" name="banned_id" value="{{$user->id}}">
+                            <a href="{{route('settings.blacklist.store', $user)}}" class="text-muted small ml-3 add-to-blacklist-form_button">Добавить в ЧС</a>
+                        </form>
+                    @endif
                 @endcan
             </div>
         </div>
