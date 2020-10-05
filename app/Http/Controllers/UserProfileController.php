@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoadMorePostsRequest;
 use App\Http\Requests\UserEditProfileRequest;
 use App\Models\User;
 use App\Repositories\PostRepository;
@@ -25,6 +26,7 @@ class UserProfileController extends BaseController
     {
         $this->setPageTitle($user->name);
         $posts = $this->getPostByUser($user->id);
+
         return $this->renderOutput('public.user_profile')->with(['user' => $user, 'posts' => $posts]);
     }
 
@@ -41,14 +43,13 @@ class UserProfileController extends BaseController
     }
 
     /**
-     * #TODO: весь этот пиздец отрефакторить! (ВАЛИДАЦИЯ ГДЕ БЛЯТБб)
      * Получение постов для бесконечной ленты
      * @return array
      * @throws \Throwable
      */
-    public function load()
+    public function load(LoadMorePostsRequest $request)
     {
-        $posts = $this->getMorePosts(\request()->get('user_id'), \request()->get('page'));
+        $posts = $this->getMorePosts($request->get('user_id'), $request->get('page'));
         $htmlOutput = [];
 
         foreach ($posts as $post) {
@@ -81,6 +82,7 @@ class UserProfileController extends BaseController
     {
         $this->setPageTitle(__('user_edit_profile'));
         $this->authorize('edit_profile', $user);
+
         return $this->renderOutput('public.user_profile_edit')
             ->with(['user' => $user]);
     }
@@ -92,10 +94,9 @@ class UserProfileController extends BaseController
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, User $user)
+    public function update(UserEditProfileRequest $request, User $user)
     {
-        $this->authorize('edit_profile', $user);            #с отдельным реквестом проблема - не могу передать в него параметры 2 пользователей. Гугл и документация не помогли. #TODO разобраться подробнее
-        $this->validate($request, ['name' => 'required|string|unique:users,name']);
+        $this->authorize('edit_profile', $user);    #если нужны доп параметры в авторизации, проще сделать так
 
         $data = $request->except('_token');
         $result = $user->update($data);
@@ -104,7 +105,7 @@ class UserProfileController extends BaseController
             return redirect()->route('user.show', $user)
                 ->with(['message' => __('misc.user_edit_success')]);
         } else {
-            return back()->withErrors()
+            return back()->withErrors(['message' => __('post.action_error')])
                 ->withInput();
         }
 

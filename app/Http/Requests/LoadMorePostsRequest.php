@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserEditProfileRequest extends FormRequest
+class LoadMorePostsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class UserEditProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;    # параметры в эту функцию не передать. Пользуйся $this->authorize если нужны какие либо еще параметры
+        return true;
     }
 
     /**
@@ -25,7 +24,8 @@ class UserEditProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:users,name'
+            'user_id' => 'nullable|integer|exists:users,id',
+            'page' => 'required|integer',
         ];
     }
 }

@@ -28,6 +28,7 @@ class CommentaryController extends BaseController
                 $responce['htmlOutput'] = view('public.blocks.posts.commentary_item')
                     ->with(['commentary' => $result])
                     ->render();
+
                 $responce['commentary_id'] = $result->id;
                 if ($result->parent_id) {
                     $responce['parent_id'] = $result->parent_id;

@@ -40,7 +40,7 @@ class BlackListController extends BaseController
         $bannedUser = $blacklist;
         $userId = \auth()->user()->id;
 
-        $blackListRecord = BlackList::where(['user_id' => $userId, 'banned_id' => $bannedUser->id]);        #todo: в обсервер
+        $blackListRecord = BlackList::where(['user_id' => $userId, 'banned_id' => $bannedUser->id]);        #не очень хорошо, но ниче лучше не придумал. В репозиторий не стал переносить
 
         $result = $blackListRecord->forceDelete();
 
@@ -62,7 +62,6 @@ class BlackListController extends BaseController
         $this->authorize('add_to_blacklist', User::findOrFail(\request()->get('banned_id')));
 
         $data = $request->except(['_token']);
-        $data['user_id'] = \auth()->user()->id;
 
         $result = BlackList::create($data);
 
