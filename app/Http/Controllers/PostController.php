@@ -6,11 +6,8 @@ use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostUpdateRequest;
 use App\Models\Post;
 use App\Repositories\PostRepository;
-use DebugBar\DebugBar;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class PostController extends BaseController
 {
@@ -29,7 +26,37 @@ class PostController extends BaseController
     {
         $posts = $this->getPostsForIndexPage();
 
+        if (\request()->wantsJson()) {
+            $data = $this->renderPostsHtml($posts->items());
+
+            if ($data->count()) {
+                return $data->toJson();
+            } else {
+                return json_encode(['error' => 'no more posts']);
+            }
+        }
+
         return $this->renderOutput('public.index')->with(['posts' => $posts]);
+    }
+
+    /**
+     * Рендер HTML для постов
+     *
+     * @param $posts
+     * @return \Illuminate\Support\Collection
+     * @throws \Throwable
+     */
+    public function renderPostsHtml($posts)
+    {
+        $renderedPosts = collect();
+
+        foreach ($posts as $post) {
+            $postHtml = view('public.blocks.posts.post')->with(['post' => $post])->render();
+
+            $renderedPosts->add($postHtml);
+        }
+
+        return $renderedPosts;
     }
 
     /**
@@ -142,47 +169,12 @@ class PostController extends BaseController
 
     /**
      * Получение постов из репозитория и их обработка
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getPostsForIndexPage()
     {
-        $count = config('settings.index_post_chars_limit');
         $result = $this->postsRepository
-            ->getPostsForIndex()
-            ->load('user', 'commentaries')
-            ->transform(function ($item) use ($count) {
-                if (mb_strlen($item->content) > $count) {
-                    $item->content = Str::limit($item->content, $count, '...');
-                    $item->is_chopped = true;
-                }
-
-                return $item;
-            });
-
-        return $result;
-    }
-
-    /**
-     * Получение постов для бесконечной ленты
-     * @return array
-     * @throws \Throwable
-     */
-    public function load()
-    {
-        $posts = $this->getMorePosts(\request()->get('page'));
-        $htmlOutput = [];
-
-        foreach ($posts as $post) {
-            $htmlOutput[] = view('public.blocks.posts.post')->with(['post' => $post])->render();
-        }
-
-        return $htmlOutput;
-    }
-
-    public function getMorePosts(int $page)
-    {
-        $offset = config('settings.index_post_count') * $page;
-        $result = $this->postsRepository->getMorePostsForIndex($offset);
+            ->getPosts();
 
         return $result;
     }

@@ -12,36 +12,39 @@ jQuery('document').ready(function ($) {
      * Дозагрузка постов
      * @type {number}
      */
-    let currentPage = 1;
+    let currentPage = 2;
     $('#load-more').bind('click', function (e) {
 
-        let userId = parseInt($(this).data('user'));
         let data = {
-            user_id: userId,
             page: currentPage
         };
 
-        let ajaxUrl = function(userId) {
-            if (userId) {
-                return `/user/${userId}/load`
-            } else {
-                return '/post/load'
-            }
+        if($('meta[name="auth_user_id"]').length) {
+            data.auth_user_id = $('meta[name="auth_user_id"]').attr('content');
         }
 
+        if($('meta[name="user_id"]').length) {
+            data.user_id = $('meta[name="user_id"]').attr('content');
+        }
+
+        let ajaxUrl = (data.user_id) ? `/user/${data.user_id}/posts` : '/';
+
         $.ajax({
-            url: ajaxUrl(userId),
+            url: ajaxUrl,
             data: data,
-            type: "POST",
+            type: "GET",
+            dataType: "JSON",
             success: function (responce) {
                 currentPage += 1;
                 for(var i in responce) {
-                    $('.container').append(responce[i]);
-                    if(responce.length < 20) {          //чет как то не хорошо TODO: по новой миша
+
+                    if(responce.error) {
                         $('.load-more-container').remove();
-                    } else {
-                        $('.load-more-container').appendTo('.container');
+                        return;
                     }
+
+                    $('.container').append(responce[i]);
+                    $('.load-more-container').appendTo('.container');
                 }
             }
         })

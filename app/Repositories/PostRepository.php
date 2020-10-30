@@ -3,10 +3,9 @@
 
 namespace App\Repositories;
 
-use App\Models\Post;
 use App\Models\Post as Model;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 
 class PostRepository extends BaseRepository
 {
@@ -23,8 +22,10 @@ class PostRepository extends BaseRepository
      * Получение постов для индексной страницы
      * @return Collection
      */
-    public function getPostsForIndex()
+    public function getPosts(array $attributes = [])
     {
+        $count = config('settings.index_post_count');
+
         $columns = [
             'id',
             'title',
@@ -35,90 +36,28 @@ class PostRepository extends BaseRepository
 
         $result = $this->startConditions()
             ->select($columns)
+            ->where($attributes)
             ->latest()
-            ->take(config('settings.index_post_count'))
-            ->get();
+            ->paginate($count);
+
+        $result->load('user', 'commentaries')
+            ->transform(function ($item) {
+                return $this->limitContentLength($item);
+            });
 
         return $result;
     }
 
-    //нахуя а главное зачем я это делал?
-    /*public function getForEdit(int $id) : Model
+    public function limitContentLength($item, $symbolLimit = null)
     {
-        $columns = [
-            'id',
-            'title',
-            'content',
-            'created_at',
-            'user_id',
-            'published_at'
-        ];
+        if (!$symbolLimit) {
+            $symbolLimit = config('settings.index_post_chars_limit');
+        }
 
-        $result = $this->startConditions()
-            ->select($columns)
-            ->find($id);
-
-        return $result;
-    }*/
-
-    public function getPostsByUser(int $id)
-    {
-        $columns = [
-            'id',
-            'title',
-            'content',
-            'created_at',
-            'user_id'
-        ];
-
-        $result = $this->startConditions()
-            ->select($columns)
-            ->where('user_id', $id)
-            ->latest()
-            ->take(config('settings.index_post_count'))
-            ->get();
-
-        return $result;
-    }
-
-    public function getMorePostsForIndex(int $offset)
-    {
-        $columns = [
-            'id',
-            'title',
-            'content',
-            'created_at',
-            'user_id'
-        ];
-
-        $result = $this->startConditions()
-            ->select($columns)
-            ->latest()
-            ->offset($offset)
-            ->take(config('settings.index_post_count'))
-            ->get();
-
-        return $result;
-    }
-
-    public function getMorePostsForUser(int $userId, int $offset)
-    {
-        $columns = [
-            'id',
-            'title',
-            'content',
-            'created_at',
-            'user_id'
-        ];
-
-        $result = $this->startConditions()
-            ->select($columns)
-            ->where('user_id', $userId)
-            ->latest()
-            ->offset($offset)
-            ->take(config('settings.index_post_count'))
-            ->get();
-
-        return $result;
+        if (mb_strlen($item->content) > $symbolLimit) {
+            $item->content = Str::limit($item->content, $symbolLimit, '...');
+            $item->is_chopped = true;
+        }
+        return $item;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoadMorePostsRequest;
 use App\Http\Requests\UserEditProfileRequest;
 use App\Models\User;
 use App\Repositories\PostRepository;
@@ -25,50 +24,19 @@ class UserProfileController extends BaseController
     public function show(User $user)
     {
         $this->setPageTitle($user->name);
-        $posts = $this->getPostByUser($user->id);
+        $posts = $this->getPostsByUser($user->id);
 
         return $this->renderOutput('public.user_profile')->with(['user' => $user, 'posts' => $posts]);
     }
 
     /**
      * Получить посты пользователя
-     * @param int $id
+     * @param int $user_id
      * @return mixed
      */
-    public function getPostByUser(int $id)
+    public function getPostsByUser(int $user_id)
     {
-        $result = $this->postsRepository->getPostsByUser($id);
-
-        return $result;
-    }
-
-    /**
-     * Получение постов для бесконечной ленты
-     * @return array
-     * @throws \Throwable
-     */
-    public function load(LoadMorePostsRequest $request)
-    {
-        $posts = $this->getMorePosts($request->get('user_id'), $request->get('page'));
-        $htmlOutput = [];
-
-        foreach ($posts as $post) {
-            $htmlOutput[] = view('public.blocks.posts.post')->with(['post' => $post])->render();
-        }
-
-        return $htmlOutput;
-    }
-
-    /**
-     * Получить посты через AJAX
-     * @param int $userId
-     * @param int $page
-     * @return mixed
-     */
-    public function getMorePosts(int $userId, int $page)
-    {
-        $offset = config('settings.index_post_count') * $page;
-        $result = $this->postsRepository->getMorePostsForUser($userId, $offset);
+        $result = $this->postsRepository->getPosts(['user_id' => $user_id]);
 
         return $result;
     }

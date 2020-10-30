@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\CommentaryController;
 use App\Http\Controllers\PostController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserPostsController;
 use App\Http\Controllers\UserProfileController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,9 @@ use App\Http\Controllers\UserProfileController;
 |
 */
 
-Route::post('/post/load', [PostController::class, 'load'])
-    ->name('post.load');  #ajax
 Route::post('/post/commentary/create', [CommentaryController::class, 'store'])
     ->name('post.commentary.create');
-Route::get('/post/commentary/create', [CommentaryController::class, 'store'])
-    ;
+Route::get('/post/commentary/create', [CommentaryController::class, 'store']);
 
 Route::resource('post', PostController::class)
     ->except(['index'])
@@ -30,11 +28,12 @@ Route::resource('post', PostController::class)
 Route::get('/', [PostController::class, 'index'])
     ->name('posts.index');
 
-Route::group(['prefix' => '/user/'] , function () {
-    Route::get('/{user}', [UserProfileController::class, 'show'])->name('user.show');
-    Route::post('/{user}/load', [UserProfileController::class, 'load'])->name('user.posts.load');   #ajax
-    Route::get('/{user}/edit', [UserProfileController::class, 'edit'])->name('user.edit');
-    Route::put('/{user}/edit', [UserProfileController::class, 'update'])->name('user.update');
+Route::group(['prefix' => '/user/', 'as' => 'user.'] , function () {
+    Route::get('/{user}', [UserProfileController::class, 'show'])->name('show');
+    Route::get('/{user}/edit', [UserProfileController::class, 'edit'])->name('edit');
+    Route::put('/{user}/edit', [UserProfileController::class, 'update'])->name('update');
+
+    Route::get('/{user}/posts', [UserPostsController::class, 'index'])->name('posts.index');
 });
 
 /**
@@ -47,7 +46,6 @@ Route::group(['prefix' => 'settings'], function () {
 });
 
 Auth::routes();
-
 
 Route::get('/test', function () {
     $user = \App\Models\User::find(2);

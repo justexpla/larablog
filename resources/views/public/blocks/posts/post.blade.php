@@ -1,4 +1,4 @@
-@if( !(\Auth::user()) || ! \Auth::user()->hasOnBlackList($post->user->id))  {{--господи, какой пиздец. Но это работает. todo - ну наверняка должно быть что-то проще--}}
+{{--@if( !(\Auth::user()) || ! \Auth::user()->hasOnBlackList($post->user->id))  --}}{{--господи, какой пиздец. Но это работает. todo - ну наверняка должно быть что-то проще--}}
     @php /**@var \App\Models\Post $post*/ @endphp
     @php $detailLink = route('posts.show', ['post' => $post->id]); @endphp
     <div class="post pl-3 pr-3 pt-3 pb-1 bg-white rounded shadow-sm mb-4 mt-3">
@@ -50,4 +50,4 @@
             </div>
         </div>
     </div>
-    @endif
+    {{--@endif--}}

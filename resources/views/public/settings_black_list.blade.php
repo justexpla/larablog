@@ -22,7 +22,7 @@
                             {{$counter++}}
                         </th>
                         <td>
-                            <a href="">{{$user->name}}</a>
+                            <a href="{{$user->path()}}">{{$user->name}}</a>
                         </td>
                         <td>
                             <form action="{{route('settings.blacklist.destroy', $user)}}" method="POST">
