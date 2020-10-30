@@ -32,7 +32,7 @@ class UserPostsController extends BaseController
     public function getPosts(int $userId)
     {
         $data = $this->postsRepository
-            ->getPosts(['user_id' => $userId]);
+            ->getPosts(['user_id' => $userId], false);
 
         return $data;
     }

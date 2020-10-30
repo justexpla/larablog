@@ -48,6 +48,5 @@ Route::group(['prefix' => 'settings'], function () {
 Auth::routes();
 
 Route::get('/test', function () {
-    $user = \App\Models\User::find(2);
-    dd($user->blackList);
+
 });

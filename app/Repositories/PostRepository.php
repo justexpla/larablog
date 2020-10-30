@@ -20,10 +20,17 @@ class PostRepository extends BaseRepository
 
     /**
      * Получение постов для индексной страницы
+     * @param array $attributes
+     * @param bool $showBlacklisted
      * @return Collection
      */
-    public function getPosts(array $attributes = [])
+    public function getPosts(array $attributes = [], bool $showBlacklisted = true)
     {
+        //TODO: явно нужен будет рефактор. Возможно разбить на 2 метода - с блеклистом и без него
+        if($showBlacklisted && auth()->check()) {
+            $blackListedUsers = auth()->user()->blackList->pluck('id')->toArray();
+        }
+
         $count = config('settings.index_post_count');
 
         $columns = [
@@ -36,8 +43,13 @@ class PostRepository extends BaseRepository
 
         $result = $this->startConditions()
             ->select($columns)
-            ->where($attributes)
-            ->latest()
+            ->where($attributes);
+
+        if(isset($blackListedUsers) && count($blackListedUsers)) {
+            $result = $result->whereNotIn('user_id', $blackListedUsers);
+        }
+
+        $result = $result->latest()
             ->paginate($count);
 
         $result->load('user', 'commentaries')

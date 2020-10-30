@@ -36,7 +36,7 @@ class UserProfileController extends BaseController
      */
     public function getPostsByUser(int $user_id)
     {
-        $result = $this->postsRepository->getPosts(['user_id' => $user_id]);
+        $result = $this->postsRepository->getPosts(['user_id' => $user_id], false);
 
         return $result;
     }
