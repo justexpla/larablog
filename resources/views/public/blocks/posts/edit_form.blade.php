@@ -24,13 +24,17 @@
                 </div>
                 <div class="mb-3">
                     <label for="content">{{__('post.content')}}</label>
-                    <textarea class="form-control" id="content" required="" name="content" rows="15">{{old('content') ?? $post->content ?? ''}}</textarea>
+                    {{--<textarea class="form-control" id="content" required="" name="content" rows="15">{{old('content') ?? $post->content ?? ''}}</textarea>--}}
+
+                    <input type="hidden" value="{{old('content') ?? $post->content ?? ''}}" id="content" name="content">
+                    <trix-editor input="content"></trix-editor>
+
                     <div class="invalid-feedback">
                         {{__('post.content_validation_error')}}
                     </div>
                 </div>
 
-                <button class="btn btn-primary btn-lg btn-block" type="submit">{{__('post.submit')}}</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">{{isset($post) ? __('post.update') :__('post.submit')}}</button>
             </form>
         </div>
     </div>

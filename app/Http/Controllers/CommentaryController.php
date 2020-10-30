@@ -42,4 +42,17 @@ class CommentaryController extends BaseController
             return ['error' => __('post.action_error')];
         }
     }
+
+    public function storeImage()
+    {
+        request()->validate([
+            'file' => 'required|mimes:jpeg,bmp,png',
+            'key' => 'required|string'
+        ]);
+
+        $path = request()->file('file')
+            ->storeAs('public', request('key'));
+
+        return response($path, 204);
+    }
 }

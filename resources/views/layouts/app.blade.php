@@ -138,9 +138,9 @@
                 this.parentElement.submit();
             }
         })
-        if ($('textarea#content').length) {
+        /*if ($('textarea#content').length) {
             CKEDITOR.replace('content')
-        }
+        }*/
     })
 </script>
 </body></html>

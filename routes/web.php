@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/post/commentary/create', [CommentaryController::class, 'store'])
     ->name('post.commentary.create');
 Route::get('/post/commentary/create', [CommentaryController::class, 'store']);
+Route::post('/post/commentary/storeImage', [CommentaryController::class, 'storeImage'])
+    ->name('post.commentary.storeImage');
 
 Route::resource('post', PostController::class)
     ->except(['index'])
@@ -49,4 +51,10 @@ Auth::routes();
 
 Route::get('/test', function () {
 
+});
+
+Route::post('/test1', function () {
+    $path = request()->file('file')->storeAs('public', request('key'));
+
+    return response($path, 204);
 });
