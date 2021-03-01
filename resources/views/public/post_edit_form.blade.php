@@ -42,7 +42,7 @@
                     if (xhr.status == 204) {
                         var attributes = {
                             url: '/storage/' + key,
-                            href: '/storage/' + key + "?content-disposition=attachment"
+                            href: '/storage/' + key
                         }
                         successCallback(attributes)
                     }

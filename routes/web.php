@@ -48,13 +48,3 @@ Route::group(['prefix' => 'settings'], function () {
 });
 
 Auth::routes();
-
-Route::get('/test', function () {
-
-});
-
-Route::post('/test1', function () {
-    $path = request()->file('file')->storeAs('public', request('key'));
-
-    return response($path, 204);
-});
